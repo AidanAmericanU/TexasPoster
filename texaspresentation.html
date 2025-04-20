@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>Correlates of Birth Defects in Texan Counties</title>
+
+
+<script src="texaspresentation_files/kePrint-0.0.1/kePrint.js"></script>
+<link href="texaspresentation_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+
+
+
+<!--
+Font-awesome icons ie github or twitter
+-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/brands.css" integrity="sha384-n9+6/aSqa9lBidZMRCQHTHKJscPq6NW4pCQBiMmHdUCvPN8ZOg2zJJTkC7WIezWv" crossorigin="anonymous">
+
+<!--
+Google fonts api stuff
+-->
+<link href='https://fonts.googleapis.com/css?family=Bebas' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Times New Roman' rel='stylesheet'>
+
+<!--
+Here are the required style attributes for css to make this poster work :)
+-->
+<style>
+@page {
+size: 60in 48in;
+margin: 0;
+padding: 0;
+}
+body {
+margin: 0px;
+padding: 0px;
+width: 60in;
+height: 48in;
+text-align: justify;
+font-size: 45px;
+line-height: 1.05;
+}
+/* RMarkdown Class Styles */
+/* center align leaflet map,
+from https://stackoverflow.com/questions/52112119/center-leaflet-in-a-rmarkdown-document */
+.html-widget {
+margin: auto;
+position: sticky;
+margin-top: 2cm;
+margin-bottom: 2cm;
+}
+.leaflet.html-widget.html-widget-static-bound.leaflet-container.leaflet-touch.leaflet-fade-anim.leaflet-grab.leaflet-touch-drag.leaflet-touch-zoom {
+position: sticky;
+width: 100%;
+}
+pre.sourceCode.r {
+background-color: #dddddd40;
+border-radius: 4mm;
+padding: 4mm;
+width: 75%;
+margin: auto;
+margin-top: 1em;
+margin-bottom: 1em;
+/* align-items: center; */
+}
+code.sourceCode.r{
+background-color: transparent;
+font-size: 20pt;
+border-radius: 2mm;
+}
+code {
+font-size: 25pt;
+font-family: monospace;
+background-color: #00808024;
+color: #0b4545;
+padding: 1.2mm;
+line-height: 1;
+border-radius: 2mm;
+}
+caption {
+margin-bottom: 10px;
+font-size: 20pt;
+font-style: italic;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #00808020;
+}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+  border-spacing: 0;
+  font-size: 40%;
+  border-style: none;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-right: 1em;
+  padding-left: 1em;
+  line-height: 1em;
+}
+table {
+  margin: auto;
+}
+th {
+  padding-left: 5mm;
+  padding-right: 5mm;
+}
+.caption {
+font-size: 20pt;
+font-style: italic;
+padding-top: 0;
+}
+.references {
+font-size: 20px;
+line-height: 90%;
+}
+/* Create three unequal columns that floats next to each other */
+.column {
+float: left;
+padding: 0px;
+}
+.outer {
+width: 60in;
+height: calc(48in *  0.6325 );
+-webkit-column-count: 3; /* Chrome, Safari, Opera */
+-moz-column-count: 3; /* Firefox */
+column-count: 3;
+-webkit-column-fill: auto;
+-moz-column-fill: auto;
+column-fill: auto;
+column-gap: 0;
+padding-left: 0cm;
+padding-right: 0cm;
+/* -webkit-column-rule-width: 50%;
+-moz-column-rule-width: 50%;
+column-rule-width: 50%; */
+-webkit-column-rule-style: none;
+-moz-column-rule-style: none;
+column-rule-style: none;
+-webkit-column-rule-color: black;
+-moz-column-rule-color: black;
+column-rule-color: black;
+background-color: #ffffff;
+font-family: Times New Roman;
+margin-top: calc(48in *  0.25 );
+padding-top: 1em;
+padding-bottom: 1em;
+}
+span.citation {
+  color: #008080;
+  font-weight: bold;
+}
+a {
+text-decoration: none;
+color: #008080;
+}
+#title {
+font-size: 125pt;
+text-align: left;
+margin: 0;
+line-height: 98%;
+border-bottom: 0;
+font-weight: normal;
+background: 0;
+}
+#author {
+color: #0b4545;
+margin: 0;
+line-height: 85%;
+font-size: 1.17em;
+}
+#affiliation {
+padding-top: 0.1em;
+color: ;
+font-style: italic;
+font-size: 25px;
+margin: 0;
+}
+sup {
+color: #cc0000;
+}
+.affiliation sup {
+font-size: 20px;
+}
+.author {
+text-align: left;
+}
+.author sup {
+font-size: 30px;
+}
+.author_extra {
+color: #008080;
+margin: 0;
+line-height: 85%;
+font-size: 35px;
+text-align: left;
+}
+.outer h1, h2, h3, h4, h5, h6 {
+text-align: center;
+margin: 0;
+font-weight: bold;
+}
+.section h1 {
+  text-align:center;
+  padding-bottom:5px;
+  background:
+    linear-gradient(
+      to left,
+      #ffffff 1%,
+      #ffffff 20%,
+      #0b454575 33%,
+      #0b4545 50%,
+      #0b454575 66%,
+      #ffffff 80%,
+      #ffffff 99%
+    )
+    left
+    bottom
+    #ffffff
+    no-repeat;
+  background-size:100% 5px ;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.outer h2 {
+text-align: center;
+}
+.outer p, .level2 {
+color: #000000;
+}
+.outer ol {
+padding-left: 8%;
+padding-right: 8%;
+text-align: left;
+}
+.main {
+width: 60in;
+height: calc(48in * 0.25);
+position: absolute;
+background-color: #0b4545;
+color: #ffffff90;
+font-family: Bebas;
+background-image: linear-gradient(#0b4545 50%,#008080);
+}
+.main strong {
+color: #ffffff;
+}
+.main strong > sup {
+color: #ffffff;
+}
+.main sup {
+color: #ffffff90;
+}
+#main-img-left {
+width: 10%;
+left: 0.5in;
+bottom: 0.2in;
+position: absolute;
+}
+#main-img-center {
+width: 10%;
+left: calc(60in * 0.45);
+bottom: 0.5in;
+position: absolute;
+}
+#main-img-right {
+width: 10%;
+right: 0.5in;
+bottom: 0.2in;
+position: absolute;
+}
+.main p {
+font-size: 150px;
+font-family: Bebas;
+text-align: center;
+margin: 0;
+position: absolute;
+top: 50%;
+-ms-transform: translateY(-50%);
+transform: translateY(-50%);
+margin-left: 1em;
+}
+.fab {
+color: #00000030;
+font-size: 25px;
+}
+.twitter, i {
+color: #00000030;
+font-size: 35px;
+text-decoration: none;
+}
+a.email {
+text-decoration: none;
+color: #00000030;
+font-size: 35px;
+}
+.envelope {
+color: #00000030;
+font-size: 5px;
+text-decoration: none;
+}
+.poster_wrap {
+width: 60in;
+height: 48in;
+padding: 0cm;
+}
+.main_bottom {
+width: 60in;
+height: calc(48in * 0.1);
+margin-top: calc(48in * 0.9);
+position: absolute;
+background-color: #0b4545;
+background-image: linear-gradient(#008080 10%, #0b4545);
+}
+.section {
+  padding-left: 10mm;
+  padding-right: 10mm;
+}
+span > #tab:mytable {
+  font-weight: bold;
+}
+.orcid img {
+  width: 3%;
+}
+.emphasis {
+  background-color: #008080;
+  color: #ffffff;
+  border: solid #0b2045 3mm;
+  margin: 1em;
+  padding-left: 0;
+  padding-right: 0;
+}
+.emphasis h1 {
+  font-weight: bold;
+  background: none;
+  background-color: #0b2045;
+  padding-bottom: 5mm;
+  padding-top: 1mm;
+  margin-top: -1mm;
+  margin-right: -1mm;
+  margin-left: -1mm;
+}
+.emphasis blockquote {
+  border: 0;
+}
+.emphasis ol {
+  padding: 0;
+  padding-left: 8%;
+  font-size: 100%;
+  font-weight: bold;
+}
+.emphasis p {
+  color: #ffffff;
+}
+</style>
+</head>
+<body>
+
+
+<div class="poster_wrap">
+
+<div class="column outer">
+<div class="section">
+<h1 id="title">Correlates of Birth Defects in Texan Counties</h1><br>
+<h3 id="author" class="author">
+
+Aidan Isaac, American University<sup> </sup><br>
+
+<a class='envelope'><i class="fas fa-envelope"></i></a> <a href="mailto:ai2401a@american.edu" class="email">ai2401a@american.edu</a> <br>
+</h3>
+
+<h5 id="author_extra", class="author_extra">
+</h5>
+
+
+</div>
+
+<div id="introduction-and-methods" class="section level2">
+<h2>Introduction and Methods</h2>
+<p>In this project, I sought to find out statistically significant factors that may increase birth defects. I chose Texas for this project as the Texas Department of State Health Services (DSHS) keeps robust, detailed, and accurate data regarding birth defects in the entire state. In Texas, the DSHS has authority to review hospital records and record demographic and diagnostic information regarding birth defects from those records. In the period from 2012-2021, Texas recorded 377,000 birth defects<a href="https://www.dshs.texas.gov/texas-birth-defects-epidemiology-surveillance/birth-defects-data-publications"><sup>1</sup></a>, far exceeding the data kept from other states in the US. Most states other than Texas do not have a birth defect database, and ones that do are not nearly as detailed and in-depth as the Texas data. For clarity, the definition of birth defect according to the Texas DSHS is any abnormality that is present at birth. This includes anything between a cleft lip and microcephaly. For my analysis, I started out by compiling county level data from the DSHS from 2012-2021<a href="https://healthdata.dshs.texas.gov/dashboard/births-and-deaths/birth-defects#data-source"><sup>2</sup></a>. I then used the CDC’s 2019 County Health data for other variables, such as binge drinking rates<a href="https://www.countyhealthrankings.org/health-data/community-conditions/health-infrastructure/health-promotion-and-harm-reduction/excessive-drinking?year=2019&state=48&tab=1"><sup>3</sup></a>, air pollution levels<a href="https://www.countyhealthrankings.org/health-data/texas/data-and-resources"><sup>4</sup></a>, and diabetes rates<a href="https://www.countyhealthrankings.org/health-data/texas/data-and-resources"><sup>5</sup></a>. All of those rates are from 2019, which I chose as it was the last year before the COVID-19 pandemic, which would have been an extraneous factor in my data.
+This research is important as it seeks to understand correlates between birth defects and binge drinking, air pollution, and diabetes. While not groundbreaking, it is important to analyze the high quality Texas birth defect data along side county level data from the CDC to find what factors increase the probability of birth defects.
+I expect that binge drinking will be a significant factor in birth defects, as drinking during pregnancy is known to cause a myriad of developmental issues while in utero. Not only this, but binge drinking also causes general health issues that may affect the child. For this reason I am using general binge drinking rates for men and women. Note: Counties with less than 13 recorded counts of birth defects are suppressed, and not available in the dataset.</p>
+<ul>
+<li><p>Binge drinking is defined by the CDC as over 4 drinks on one occasion, over 8 drinks per week, or drinking at all during pregnancy.</p></li>
+<li><p>Air pollution is measured by the CDC as micrograms of particulate matter present per cubic meter.</p></li>
+<li><p>Below the Poverty Line is measured by the % of the population making less than $29,000 a year.</p></li>
+<li><p>Diabetes is measured by percent of the population diagnosed with Type 1 or Type 2 diabetes.</p></li>
+</ul>
+<p><img src="texaspresentation_files/figure-html/mapping-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><br /></p>
+</div>
+<div id="hypothesis" class="section level2">
+<h2>Hypothesis</h2>
+<p>Adults who binge drink at a high rate are more likely to have children with birth defects across Texas, and this should be more significant than other factors such as air pollution and diabetes. This hypothesis stemmed from the fact that women are heavily discouraged from drinking alcohol while pregnant, as the existence of birth defects such as Fetal Alcohol Syndrome originate from alcohol consumption while pregnant. I am including air pollution and diabetes in this analysis, as those factors are often cited along with binge drinking by the CDC as contributing to birth defects.</p>
+</div>
+<div id="results-and-findings" class="section level2">
+<h2>Results and Findings</h2>
+<table class=" spaced-table" style="color: black; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:linearregression">Table 1: </span>Linear Regression of Birth Defect Prevalence in Texas Counties
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:right;">
+Coefficient
+</th>
+<th style="text-align:right;">
+Std. Error
+</th>
+<th style="text-align:right;">
+t-value
+</th>
+<th style="text-align:right;">
+p-value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Intercept
+</td>
+<td style="text-align:right;">
+0.07213
+</td>
+<td style="text-align:right;">
+0.01286
+</td>
+<td style="text-align:right;">
+5.610
+</td>
+<td style="text-align:right;">
+&lt; 0.001***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+County Drinking Rate (%)
+</td>
+<td style="text-align:right;">
+-0.07576
+</td>
+<td style="text-align:right;">
+0.04590
+</td>
+<td style="text-align:right;">
+-1.651
+</td>
+<td style="text-align:right;">
+0.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Below Poverty Line (%)
+</td>
+<td style="text-align:right;">
+-0.00023
+</td>
+<td style="text-align:right;">
+0.00009
+</td>
+<td style="text-align:right;">
+-2.479
+</td>
+<td style="text-align:right;">
+0.014*
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Air Pollution Level (µg/m³)
+</td>
+<td style="text-align:right;">
+0.00222
+</td>
+<td style="text-align:right;">
+0.00049
+</td>
+<td style="text-align:right;">
+4.536
+</td>
+<td style="text-align:right;">
+&lt; 0.001***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Diabetes Prevalence (%)
+</td>
+<td style="text-align:right;">
+-0.00151
+</td>
+<td style="text-align:right;">
+0.00045
+</td>
+<td style="text-align:right;">
+-3.328
+</td>
+<td style="text-align:right;">
+0.001**
+</td>
+</tr>
+</tbody>
+</table>
+<p>This table shows a multiple linear regression model of birth defect prevalence in Texas counties with county drinking rates, percent of people below the poverty level, air pollution levels, and diabetes prevalence.</p>
+<ul>
+<li><p>Notably, the county binge drinking rate is not statistically significant. It would barely miss the most liberal interpretation of statistical significance at 0.1. I believe this may be due to several factors. First, the data is not filtered by women, and is not necessarily accounting for women binge drinking during pregnancy. If the data was exclusively women who binge drank during pregnancy, I imagine the data would be quite different. Some women who are binge drinkers also may quit drinking during pregnancy, which I believe would be common. Second, men may skew the data as well. Perhaps men who are binge drinkers do not pass on as many harmful traits to their child, as they are not the ones carrying it. Overall, I think the lack of statistical significance may be indicative of most women knowing not to drink alcohol during pregnancy.</p></li>
+<li><p>Being below the poverty line has a slight statistical significant, but is still above the 0.05 threshold for typically considering something statistically significant. The intercept is so low that it seems that being low income does not affect birth defects much, at least in this scenario.</p></li>
+<li><p>Air pollution is the biggest variable impacting birth defects. It is highly statistically significant, and has the largest coefficient impacting the rates of birth defects. For every microgram of particulate matter per cubic meter, it is expected that birth defect rates will increase by 0.002%. This may sound insignificant, but a microgram is quite a small amount, and large increases in pollutants are associated with an increase in birth defects. This makes sense, as air quality impacts many aspects of health, and can lead to other health detriments such as cancer and asthma. It is certainly not good for pregnancy, and the data shows this. An issue with this may be that air pollution is highly correlated with population density, which means that the data could be changed due to this correlation. However, I find this unlikely as other research absolutely suggests that air pollution can increase the chance of birth defects.</p></li>
+<li><p>Lastly, diabetes falls below the threshold of statistical significance. However, it seems that a one percent increase in the rate of diabetes is associated with a 0.001% decrease in birth defects. I believe that this is so small that it should be considered generally insignificant. It also seems counter intuitive, as most CDC sources state that diabetes raises the risk of birth defects in children. I believe there are two main explanations for this. The first is that well-managed diabetes can create much better outcomes for a child. This may be indicative that Texas generally has a good healthcare system, especially for diabetic women who are planning to have children. One thing to look into would be how rates change for people with Type 1 diabetes and Type 2 diabetes, and if that might impact birth defect rates. Another possibility could be that there is just a small sample size and that overlap between diabetes and birth defects could be small in Texas. If expanded nationally, the results could be quite different.</p></li>
+</ul>
+<p><br /></p>
+</div>
+<div id="graphs-and-data" class="section level2">
+<h2>Graphs and Data</h2>
+<p><img src="texaspresentation_files/figure-html/corrmatrix-1.png" width="40%" style="display: block; margin: auto;" /></p>
+<p>Here is a correlation matrix that I thought was interesting. While not presenting critical information to the research, it shows that correlation rates can be slightly different than what the multiple linear regression model shows. In particular, there’s a very small correlation between birth defects and drinking rates, and a larger one between air pollution and birth defects. Poverty and drinking rates have a high negative correlation, but that is generally irrelevant to the project.</p>
+<p><img src="texaspresentation_files/figure-html/graphs-1.png" width="40%" style="display: block; margin: auto;" />
+This graph shows a very noisy scatterplot of birth defects and county drinking. It shows that there’s not a strong correlation or statistical significance to the issue.
+<img src="texaspresentation_files/figure-html/graphs2-1.png" width="40%" style="display: block; margin: auto;" />
+On the contrary, this air pollution scatterplot is still a little noisy, but shows a clear relationship between air pollution and birth defects.</p>
+</div>
+<div id="conclusion-and-findings" class="section level2">
+<h2>Conclusion and Findings</h2>
+<p>This research fails to reject the null hypothesis. There is nothing in the analysis that shows that binge drinking rates impact birth defects in Texas at a statistically significant rate. They certainly do not impact them more than air pollution, which was shown to be statistically significant and have a large impact on birth defect rates. As mentioned previously, there may be certain factors to the data that may have impacted the analysis. If my binge drinking data was only from women who drank while pregnant, it is likely that would’ve impacted my findings drastically. However, I sought to find out if binge drinking rates across both sexes would impact birth defects at a statistically significant level, and there is not enough information to definitively say that it does not. Overall, this was an interesting project, and it taught me that differences in data collection can have a large impact on research findings. It would be interesting to repeat this projects in other states, provided they are able to have birth defect data that is as high quality as Texas’.</p>
+</div>
+
+</div>
+<div class="main">
+<p>Analyzing the Impacts of Binge Drinking on Birth Defects in Texas</p>
+</div>
+<div class="main_bottom">
+<img id="main-img-left" src=>
+<img id="main-img-center" src=>
+<img id="main-img-right" src=>
+</div>
+</div>
+
+
+
+</body>
+</html>
